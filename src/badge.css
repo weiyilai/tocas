@@ -12,7 +12,7 @@
    ========================================================================== */
 
 .ts-badge {
-    font-size: var(--ts-font-size-14px);
+    font-size: var(--ts-font-size-13px);
     border-radius: 100rem;
     padding: 0.225rem 0.5rem;
     line-height: 1;
@@ -73,7 +73,7 @@
     font-size: var(--ts-font-size-12px);
 }
 .ts-badge.is-large {
-    font-size: var(--ts-font-size-16px);
+    font-size: var(--ts-font-size-14px);
 }
 
 /**
