@@ -34,6 +34,10 @@ window.tocas_modules = []
                 })
             })
         })
+
+        // 立即檢查一次所有響應式元素，因為 MutationObserver 不會監聽已經存在的元素（例如：HTML）。
+        // https://github.com/teacat/tocas/issues/1050
+        this.windowResize()
     }
 
     // attributeMutation
@@ -67,7 +71,7 @@ window.tocas_modules = []
     // getAllContaineredElements
     getAllContaineredElements = container => {
         return container.querySelectorAll(
-            tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":has-"])` : `[class^="@"][class*=":"]`
+            tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":has-"])` : `[class^="@"][class*=":"]`,
         )
     }
 
@@ -273,6 +277,15 @@ window.tocas_modules = [...window.tocas_modules, new Responsive()]
             // 如果這個項目沒有被啟用，就預設隱藏對應的內容，這樣使用者就不用額外手動隱藏該內容。
             this.initialTab(added_node)
         }
+
+        // 如果這個新追加的 DOM 節點有 ID，那它可能是某個 Tab 的內容。
+        // https://github.com/teacat/tocas/issues/1078
+        if (added_node.id) {
+            var tab = document.querySelector(`[data-tab="${added_node.id}"]`)
+            if (tab) {
+                this.initialTab(tab)
+            }
+        }
     }
 
     // isTab
@@ -288,7 +301,7 @@ window.tocas_modules = [...window.tocas_modules, new Responsive()]
     // initialTab
     initialTab = element => {
         if (!this.isActiveTab(element)) {
-            document.getElementById(element.dataset.tab).classList.add("has-hidden")
+            document.getElementById(element.dataset.tab)?.classList.add("has-hidden")
         }
     }
 
@@ -432,6 +445,12 @@ window.tocas_modules = [...window.tocas_modules, new Tab()]
         return element.dataset.position || "bottom-start"
     }
 
+    // collapse
+    collapse = element => {
+        var collapse = element.dataset.collapse || "trigger item"
+        return collapse.split(" ")
+    }
+
     // windowMousedown
     windowMousedown = event => {
         // 取得這個視窗點擊最鄰近的 Dropdown 模組觸發元素。
@@ -527,8 +546,10 @@ window.tocas_modules = [...window.tocas_modules, new Tab()]
             return
         }
 
-        // 項目點擊成功，關閉這個彈出式選單。
-        this.closeDropdown(dropdown)
+        // 如果包含 "item"，則關閉選單。
+        if (this.collapse(dropdown).includes("item")) {
+            this.closeDropdown(dropdown)
+        }
     }
 
     // clickEventListener
@@ -552,8 +573,12 @@ window.tocas_modules = [...window.tocas_modules, new Tab()]
             target.style.removeProperty("--ts-dropdown-position")
         }
 
-        // 切換目標彈出式選單的可見度。
-        target.classList.toggle("is-visible")
+        // 根據關閉條件決定行為。
+        if (this.collapse(target).includes("trigger")) {
+            target.classList.toggle("is-visible")
+        } else {
+            target.classList.add("is-visible")
+        }
 
         this.refreshRelatedTriggers(target)
 

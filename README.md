@@ -2,10 +2,10 @@
 
 以最快最直覺的方式，建構多樣的網站與漸進式網路應用程式介面。
 
--   📘 文件：[tocas-ui.com/5.0/zh-tw](https://tocas-ui.com/5.0/zh-tw) ([原始碼](https://github.com/teacat/tocas-docs))
--   🎲 範例：[tocas-ui.com/5.0/zh-tw/examples.html](https://tocas-ui.com/5.0/zh-tw/examples.html)
--   📦 原始碼：[GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas)
--   🌎 語系：**台灣正體**
+- 📘 文件：[tocas-ui.com/5.7/zh-tw](https://tocas-ui.com/5.7/zh-tw) ([原始碼](https://github.com/teacat/tocas-docs))
+- 🎲 範例：[tocas-ui.com/5.7/zh-tw/examples.html](https://tocas-ui.com/5.7/zh-tw/examples.html)
+- 📦 原始碼：[GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas)
+- 🌎 語系：**台灣正體**
 
 &nbsp;
 
@@ -15,8 +15,8 @@
 
 ```html
 <!-- 核心：Tocas UI -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/5.0.3/tocas.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/5.0.3/tocas.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/5.7.0/tocas.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/5.7.0/tocas.min.js"></script>
 
 <!-- 字體：Noto Sans TC -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -44,8 +44,8 @@
 </div>
 ```
 
--   📘 文件：[tocas-ui.com/5.0/zh-tw](https://tocas-ui.com/5.0/zh-tw) ([原始碼](https://github.com/teacat/tocas-docs))
--   🎲 範例：[tocas-ui.com/5.0/zh-tw/examples.html](https://tocas-ui.com/5.0/zh-tw/examples.html)
+- 📘 文件：[tocas-ui.com/5.7/zh-tw](https://tocas-ui.com/5.7/zh-tw) ([原始碼](https://github.com/teacat/tocas-docs))
+- 🎲 範例：[tocas-ui.com/5.7/zh-tw/examples.html](https://tocas-ui.com/5.7/zh-tw/examples.html)
 
 &nbsp;
 
@@ -53,9 +53,9 @@
 
 Tocas UI 使用且包含了下面套件的部份原始碼，謝謝他們 🥳！
 
--   [FortAwesome/Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
--   [floating-ui/floating-ui](https://github.com/floating-ui/floating-ui)
--   [lipis/flag-icons](https://github.com/lipis/flag-icons)
+- [FortAwesome/Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
+- [floating-ui/floating-ui](https://github.com/floating-ui/floating-ui)
+- [lipis/flag-icons](https://github.com/lipis/flag-icons)
 
 &nbsp;
 

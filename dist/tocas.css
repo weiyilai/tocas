@@ -22,9 +22,6 @@
  */
 
 html {
-    background: var(--ts-page-background-default); /** 1. */
-    color: var(--ts-gray-800); /** 1. */
-
     width: 100%; /** 2. */
     height: 100%; /** 2. */
 
@@ -36,6 +33,9 @@ html {
 }
 
 body {
+    background: var(--ts-page-background-default); /** 1. */
+    color: var(--ts-gray-800); /** 1. */
+
     width: 100%;
     display: table-cell;
 }
@@ -54,10 +54,10 @@ body {
     -webkit-text-size-adjust: 100%; /** 3. */
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /** 4. */
 
-    font-family: "Noto Sans TC", "Noto Sans SC", "Noto Sans HK", "Noto Sans JP", "Noto Sans KR", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue",
-        "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體,
-        "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans",
-        sans-serif;
+    font-family:
+        "Noto Sans TC", "Noto Sans SC", "Noto Sans HK", "Noto Sans JP", "Noto Sans KR", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica",
+        "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體, "LiHei Pro",
+        "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
 }
 
 /** Lock scroll when dialog was opened */
@@ -155,8 +155,9 @@ dialog[class*="ts-"],
     color: inherit;
 }
 
+
 /* ==========================================================================
-   Variables
+   Animation
    ========================================================================== */
 
 @keyframes ts-button-loading {
@@ -168,12 +169,19 @@ dialog[class*="ts-"],
     }
 }
 
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
 .ts-button {
     --horizontal-padding: 1.25em;
     --height: var(--ts-input-height-medium);
 
     --accent-color: initial;
     --accent-foreground-color: initial;
+
+    --border-width: 2px;
+    --icon-size: 1.1em;
 }
 
 /* ==========================================================================
@@ -189,7 +197,6 @@ dialog[class*="ts-"],
     box-sizing: border-box;
     user-select: none;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
     height: var(--height);
 
@@ -204,7 +211,7 @@ dialog[class*="ts-"],
 }
 
 .ts-button {
-    border: 2px solid var(--accent-color, var(--ts-gray-800));
+    border: var(--border-width) solid var(--accent-color, var(--ts-gray-800));
     min-width: 75px;
     font-size: var(--ts-font-size-14px);
     line-height: 1.5;
@@ -222,9 +229,8 @@ dialog[class*="ts-"],
     border-radius: var(--ts-border-radius-element);
 }
 
-.ts-button:hover {
-    cursor: pointer;
-    opacity: 0.98;
+.ts-button .ts-icon {
+    font-size: var(--icon-size);
 }
 
 /* ==========================================================================
@@ -242,22 +248,12 @@ dialog[class*="ts-"],
 }
 
 /**
- * Tertiary
- */
-
-.ts-button.is-tertiary {
-    color: var(--ts-gray-800);
-    background: var(--ts-gray-300);
-    border-color: var(--ts-gray-300);
-}
-
-/**
  * Outlined
  */
 
 .ts-button.is-outlined {
     background: transparent;
-    border: 2px solid var(--ts-gray-300);
+    border: var(--border-width) solid var(--ts-gray-300);
     color: var(--accent-color, var(--ts-gray-800));
 }
 
@@ -266,7 +262,7 @@ dialog[class*="ts-"],
  */
 
 .ts-button.is-negative {
-    color: var(--ts-white);
+    color: white;
     border-color: var(--ts-negative-500);
     background: var(--ts-negative-500);
 }
@@ -326,25 +322,16 @@ dialog[class*="ts-"],
     display: inline-block;
     animation: ts-button-loading 2s linear infinite;
     color: var(--ts-gray-50);
-    font-size: var(--ts-font-size-18px);
+    font-size: 1.3em;
     content: "\f110";
     position: absolute;
     top: 50%;
     left: 50%;
 }
 
-.ts-button.is-loading:is(.is-outlined, .is-secondary, .is-tertiary, .is-ghost)::after {
+.ts-button.is-loading:is(.is-outlined, .is-secondary, .is-ghost)::after {
     color: var(--ts-gray-800);
 }
-
-/**
- * Tertiary
- */
-
-/*.ts-button.is-tertiary:hover {
-    background: var(--ts-gray-100);
-    opacity: 1;
-}*/
 
 /**
  * Sizes
@@ -395,27 +382,16 @@ fieldset:disabled .ts-button {
  */
 
 .ts-button.is-icon {
+    --icon-size: 1.25em;
+
     padding: 0;
     min-width: 0;
-    /*width: calc(var(--height) * 1.1);*/
     width: var(--height);
-}
-
-.ts-button.is-icon .ts-icon {
-    font-size: 1.2em;
-}
-
-.ts-button.is-icon.is-small .ts-icon {
-    font-size: 1.15em;
 }
 
 /**
  * Side Icon
  */
-
-.ts-button:where(.is-start-icon, .is-end-icon) .ts-icon {
-    font-size: 1.2em;
-}
 
 .ts-button:is(.is-start-icon, .is-end-icon) .ts-icon::before {
     display: inline-block;
@@ -436,54 +412,39 @@ fieldset:disabled .ts-button {
 
 .ts-button:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
     position: absolute;
-    top: -2px;
-    bottom: -2px;
-    background: var(--ts-gray-900);
+    top: calc(var(--border-width) * -1);
+    bottom: calc(var(--border-width) * -1);
+    background: rgb(0, 0, 0, 0.035);
     line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: calc(2.75rem + 2px);
-}
-
-.ts-button:where(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
-    font-size: 1.2em;
+    height: calc(100% + var(--border-width) * 2);
+    width: auto;
+    aspect-ratio: 1 / 1;
 }
 
 .ts-button.is-start-labeled-icon {
-    padding-left: calc(var(--horizontal-padding) + 2.75em);
+    padding-left: calc(var(--horizontal-padding) + var(--height));
 }
 
 .ts-button.is-start-labeled-icon .ts-icon {
-    left: -2px;
+    left: calc(var(--border-width) * -1);
     border-radius: var(--ts-border-radius-element) 0 0 var(--ts-border-radius-element);
 }
 
 .ts-button.is-end-labeled-icon {
-    padding-right: calc(var(--horizontal-padding) + 2.75em);
+    padding-right: calc(var(--horizontal-padding) + var(--height));
 }
 
 .ts-button.is-end-labeled-icon .ts-icon {
-    right: -2px;
+    right: calc(var(--border-width) * -1);
     border-radius: 0 var(--ts-border-radius-element) var(--ts-border-radius-element) 0;
 }
 
-.ts-button.is-negative:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
-    background: var(--ts-negative-400);
-}
-
 .ts-button.is-outlined:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
-    /*background: var(--ts-gray-300);*/
     background: transparent;
-    border: 2px solid var(--ts-gray-300);
-}
-
-.ts-button.is-secondary:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
-    background: var(--ts-gray-200);
-}
-
-.ts-button.is-tertiary:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
-    background: var(--ts-gray-400);
+    border: var(--border-width) solid var(--ts-gray-300);
 }
 
 /**
@@ -491,13 +452,10 @@ fieldset:disabled .ts-button {
  */
 
 .ts-button.is-dense {
-    --height: var(--ts-input-height-medium-dense);
-}
-.ts-button.is-dense.is-small {
-    --height: var(--ts-input-height-small-dense);
+    --height: var(--ts-input-height-small);
 }
 .ts-button.is-dense.is-large {
-    --height: var(--ts-input-height-large-dense);
+    --height: var(--ts-input-height-medium);
 }
 
 /**
@@ -522,26 +480,6 @@ fieldset:disabled .ts-button {
 }
 
 /**
- * Start & End
- */
-
-.ts-addon {
-    display: flex;
-    gap: 2px;
-}
-
-.ts-addon > *:first-child,
-.ts-addon > .ts-input:first-child :where(input, textarea) {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-.ts-addon > *:last-child,
-.ts-addon > .ts-input:last-child :where(input, textarea) {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-/**
  * Buttons
  */
 
@@ -563,8 +501,8 @@ fieldset:disabled .ts-button {
     content: "";
     top: 50%;
     transform: translateY(-50%);
-    left: 0;
-    height: 70%;
+    left: -2px;
+    height: 50%;
     background: var(--ts-gray-600);
     width: 1px;
 }
@@ -593,6 +531,7 @@ fieldset:disabled .ts-button {
 .ts-buttons .ts-button.is-outlined + .ts-button.is-outlined {
     border-left-color: transparent;
 }
+
 
 .ts-icon.is-plane-slash-icon::before {
     content: "\e069";
@@ -8608,6 +8547,7 @@ fieldset:disabled .ts-button {
 }
 
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -8698,17 +8638,17 @@ fieldset:disabled .ts-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 500em !important;
-    line-height: 1 !important;
+    border-radius: 500em;
+    line-height: 1;
     box-sizing: border-box;
-    padding: 0.5em 0.5em !important;
+    padding: 0.5em 0.5em;
     box-shadow: 0em 0em 0em 0.1em var(--ts-gray-300) inset;
-    width: 2em !important;
-    height: 2em !important;
+    width: 2em;
+    height: 2em;
 }
 
 .ts-icon.is-rounded {
-    border-radius: var(--ts-border-radius-element) !important;
+    border-radius: var(--ts-border-radius-element);
 }
 
 /**
@@ -8831,9 +8771,14 @@ fieldset:disabled .ts-button {
     margin-right: 0.45rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
+
+.ts-divider {
+    --gap: 0;
+}
 
 /* ==========================================================================
    Base
@@ -8841,6 +8786,8 @@ fieldset:disabled .ts-button {
 
 .ts-divider {
     border-top: 1px solid var(--ts-gray-300);
+    margin-top: var(--gap);
+    margin-bottom: var(--gap);
 }
 
 /* ==========================================================================
@@ -8861,7 +8808,7 @@ fieldset:disabled .ts-button {
  */
 
 .ts-divider.is-section {
-    margin: 1rem 0;
+    --gap: 1rem;
 }
 
 /**
@@ -8891,6 +8838,7 @@ fieldset:disabled .ts-button {
 .ts-divider.is-end-text::after {
     display: none;
 }
+
 
 /* ==========================================================================
    Variables
@@ -9164,44 +9112,6 @@ fieldset:disabled .ts-button {
 }
 
 /**
- * Action Icon
- */
-
-.ts-input.is-end-action-icon :where(a, button).ts-icon {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    color: var(--ts-gray-800);
-    z-index: 1;
-}
-
-.ts-input.is-end-action-icon :where(a, button).ts-icon {
-    padding: 0 1.5rem;
-    border-radius: var(--border-radius);
-    background: var(--ts-gray-100);
-    top: 50%;
-    transform: translateY(-50%);
-    right: 0.35rem;
-    padding: 0;
-    aspect-ratio: 1.1 / 1;
-    height: 75%;
-    width: auto;
-    font-size: 1em;
-}
-
-.ts-input.is-end-action-icon :where(a, button).ts-icon:hover {
-    opacity: 0.9;
-}
-
-.ts-input.is-end-action-icon input {
-    padding-right: 3rem;
-    box-sizing: border-box;
-}
-
-/**
  * Icon
  */
 
@@ -9282,11 +9192,6 @@ fieldset:disabled .ts-input {
     user-select: none;
 }
 
-.ts-input.is-underlined:has(:disabled),
-fieldset:disabled .ts-input.is-underlined {
-    border-bottom-color: var(--ts-gray-300);
-}
-
 /**
  * Fluid
  */
@@ -9306,13 +9211,10 @@ fieldset:disabled .ts-input.is-underlined {
  */
 
 .ts-input.is-dense input {
-    --height: var(--ts-input-height-medium-dense);
-}
-.ts-input.is-dense.is-small input {
-    --height: var(--ts-input-height-small-dense);
+    --height: var(--ts-input-height-small);
 }
 .ts-input.is-dense.is-large input {
-    --height: var(--ts-input-height-large-dense);
+    --height: var(--ts-input-height-large);
 }
 
 /**
@@ -9342,99 +9244,6 @@ fieldset:disabled .ts-input.is-underlined {
     font-size: var(--ts-font-size-17px);
 }
 
-/* ==========================================================================
-   Data Input
-   ========================================================================== */
-
-.ts-taginput {
-    --border-radius: 0.4rem;
-    --height: var(--ts-input-height-medium);
-}
-
-.ts-taginput {
-    padding: 0.25rem 1rem;
-    min-height: var(--height);
-    border-radius: var(--border-radius);
-    border: 1px solid var(--ts-gray-300);
-    align-items: center;
-    display: flex;
-    cursor: text;
-}
-
-.ts-taginput.is-focused {
-    border-color: var(--ts-primary-600);
-}
-
-.ts-taginput .content {
-    align-items: center;
-    display: flex;
-}
-
-.ts-taginput .append {
-    margin: 0;
-    overflow: visible;
-    font: inherit;
-    outline: none;
-    /* border: none;*/
-    box-sizing: border-box;
-    resize: none;
-    font-size: var(--ts-font-size-14px);
-    line-height: 1.5;
-    color: var(--ts-gray-800);
-    background: var(--ts-gray-50);
-    -webkit-font-smoothing: inherit;
-    -moz-osx-font-smoothing: inherit;
-    appearance: none;
-    -webkit-appearance: none;
-    width: 10px;
-}
-
-.ts-taginput input:not(.append) {
-    display: none;
-}
-
-.ts-input[data-tocas="input-chips"] {
-    border: 1px solid var(--ts-gray-300);
-    border-radius: var(--border-radius);
-    min-height: var(--height);
-    padding: 0.25rem 1rem;
-
-    background: var(--ts-gray-50);
-    box-sizing: border-box;
-    color: var(--ts-gray-800);
-    font: inherit;
-    font-size: var(--ts-font-size-14px);
-    outline: none;
-    overflow: visible;
-    resize: none;
-    width: 100%;
-    cursor: text;
-}
-
-.ts-input[data-tocas="input-chips"] input:not(.append) {
-    display: none;
-}
-
-.ts-input[data-tocas="input-chips"] .content {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.ts-input[data-tocas="input-chips"] .content .ts-chip {
-    cursor: default;
-    user-select: none;
-}
-
-.ts-input[data-tocas="input-chips"] input.append {
-    border: 0;
-    height: auto;
-    line-height: 1.7;
-    padding: 0;
-    border-radius: 0;
-    width: 1px;
-}
 
 /* ==========================================================================
    Variables
@@ -9576,7 +9385,7 @@ fieldset:disabled .ts-file {
  */
 
 .ts-file.is-dense input {
-    --height: var(--ts-input-height-medium-dense);
+    --height: var(--ts-input-height-small);
 }
 
 .ts-file.is-dense input::file-selector-button,
@@ -9585,12 +9394,8 @@ fieldset:disabled .ts-file {
     padding-bottom: 0.15rem;
 }
 
-.ts-file.is-small.is-dense input {
-    --height: var(--ts-input-height-small-dense);
-}
-
 .ts-file.is-large.is-dense input {
-    --height: var(--ts-input-height-large-dense);
+    --height: var(--ts-input-height-medium);
 }
 
 /**
@@ -9600,6 +9405,7 @@ fieldset:disabled .ts-file {
 .ts-file.is-relaxed input {
     --height: var(--ts-input-height-large);
 }
+
 
 /* ==========================================================================
    Variables
@@ -9660,11 +9466,11 @@ fieldset:disabled .ts-file {
 
 .ts-notice.is-negative {
     background: var(--ts-negative-500);
-    color: var(--ts-white);
+    color: white;
 }
 
 .ts-notice.is-negative .title {
-    background: var(--ts-white);
+    background: white;
     color: var(--ts-negative-600);
 }
 
@@ -9702,20 +9508,6 @@ fieldset:disabled .ts-file {
     font-size: var(--ts-font-size-17px);
 }
 
-/**
- * Dense
- */
-
-.ts-notice.is-dense {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-}
-
-.ts-notice.is-dense .title {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-}
-
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -9730,7 +9522,8 @@ fieldset:disabled .ts-file {
    ========================================================================== */
 
 .ts-checkbox {
-    display: inline-flex;
+    display: flex;
+    width: fit-content;
     align-items: flex-start;
     cursor: pointer;
     user-select: none;
@@ -9797,7 +9590,7 @@ fieldset:disabled .ts-file {
     left: 0;
     right: 0;
     bottom: 0;
-    top: 0;
+    top: -0.5px;
     transform: scale(0.8);
     z-index: 1;
 
@@ -9806,7 +9599,7 @@ fieldset:disabled .ts-file {
     -webkit-font-smoothing: antialiased;
     backface-visibility: hidden;
     font-size: 1rem;
-    color: var(--accent-foreground-color, var(--ts-white));
+    color: var(--accent-foreground-color, white);
 }
 
 .ts-checkbox input:checked::after {
@@ -9824,14 +9617,8 @@ fieldset:disabled .ts-file {
 .ts-checkbox:has(:disabled),
 fieldset:disabled .ts-checkbox {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.35;
     user-select: none;
-}
-
-.ts-checkbox input:disabled,
-fieldset:disabled .ts-checkbox input {
-    background: var(--ts-gray-200);
-    border-color: var(--ts-gray-200);
 }
 
 /**
@@ -9890,6 +9677,7 @@ fieldset:disabled .ts-checkbox input {
     font-size: var(--ts-font-size-16px);
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -9904,7 +9692,8 @@ fieldset:disabled .ts-checkbox input {
    ========================================================================== */
 
 .ts-radio {
-    display: inline-flex;
+    display: flex;
+    width: fit-content;
     align-items: flex-start;
     cursor: pointer;
     user-select: none;
@@ -9980,7 +9769,7 @@ fieldset:disabled .ts-checkbox input {
     -webkit-font-smoothing: antialiased;
     backface-visibility: hidden;
     font-size: 1rem;
-    color: var(--accent-foreground-color, var(--ts-white));
+    color: var(--accent-foreground-color, white);
 }
 
 .ts-radio input:checked::after {
@@ -9998,14 +9787,8 @@ fieldset:disabled .ts-checkbox input {
 .ts-radio:has(:disabled),
 fieldset:disabled .ts-radio {
     pointer-events: none;
-    opacity: 0.5;
+    opacity: 0.35;
     user-select: none;
-}
-
-.ts-radio input:disabled,
-fieldset:disabled .ts-radio input {
-    background: var(--ts-gray-200);
-    border-color: var(--ts-gray-200);
 }
 
 /**
@@ -10056,6 +9839,7 @@ fieldset:disabled .ts-radio input {
     font-size: var(--ts-font-size-18px);
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -10082,16 +9866,10 @@ fieldset:disabled .ts-radio input {
 
 @keyframes ts-progress-indeterminate {
     0% {
-        margin-left: -10%;
-        margin-right: 100%;
-    }
-    40% {
-        margin-left: 25%;
-        margin-right: 0%;
+        inset-inline-start: -40%;
     }
     100% {
-        margin-left: 100%;
-        margin-right: 0;
+        inset-inline-start: 100%;
     }
 }
 
@@ -10114,7 +9892,7 @@ fieldset:disabled .ts-radio input {
     border-radius: var(--ts-border-radius-element);
     background: var(--ts-gray-300);
     overflow: hidden;
-    min-height: 1.6rem;
+    min-height: 1.2rem;
     line-height: 1;
 }
 
@@ -10126,8 +9904,7 @@ fieldset:disabled .ts-radio input {
     background: var(--accent-color, var(--ts-gray-800));
     color: var(--accent-foreground-color, var(--ts-gray-50));
     padding: 0rem 0.5rem;
-    font-size: var(--ts-font-size-14px);
-    border-radius: var(--ts-border-radius-element);
+    font-size: var(--ts-font-size-12px);
     min-width: fit-content;
     text-align: right;
     transition: width 1s ease-out;
@@ -10150,7 +9927,6 @@ fieldset:disabled .ts-radio input {
     left: 0;
     content: "";
     background: var(--ts-gray-300);
-    border-radius: var(--ts-border-radius-element);
     animation: ts-progress-active 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
@@ -10178,27 +9954,12 @@ fieldset:disabled .ts-radio input {
  */
 
 .ts-progress.is-indeterminate .bar {
-    animation: ts-progress-indeterminate 2s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite;
-    width: 100% !important;
+    animation: ts-progress-indeterminate 1s ease infinite normal none running;
+    width: 40% !important;
     min-width: 0;
 }
 
 .ts-progress.is-indeterminate .bar .text {
-    visibility: hidden;
-}
-
-/**
- * Queried
- */
-
-.ts-progress.is-queried .bar {
-    animation: ts-progress-indeterminate 2s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite;
-    animation-direction: reverse;
-    width: 100% !important;
-    min-width: 0;
-}
-
-.ts-progress.is-queried .bar .text {
     visibility: hidden;
 }
 
@@ -10219,25 +9980,22 @@ fieldset:disabled .ts-radio input {
  * Sizes
  */
 
-.ts-progress.is-tiny {
+.ts-progress.is-small {
     min-height: 0.7rem;
 }
 
-.ts-progress.is-tiny .bar .text {
-    font-size: 0.8em;
-}
-
-.ts-progress.is-small {
-    min-height: 1.2rem;
-}
-
 .ts-progress.is-small .bar .text {
-    font-size: 0.85em;
+    font-size: var(--ts-font-size-12px);
 }
 
-.ts-progress.is-large .bar {
-    min-height: calc(1.75rem + 1.75rem / 4);
+.ts-progress.is-large {
+    min-height: 1.6rem;
 }
+
+.ts-progress.is-large .bar .text {
+    font-size: var(--ts-font-size-13px);
+}
+
 
 /* ==========================================================================
    Variables
@@ -10253,7 +10011,7 @@ fieldset:disabled .ts-radio input {
    ========================================================================== */
 
 .ts-badge {
-    font-size: var(--ts-font-size-14px);
+    font-size: var(--ts-font-size-13px);
     border-radius: 100rem;
     padding: 0.225rem 0.5rem;
     line-height: 1;
@@ -10297,7 +10055,7 @@ fieldset:disabled .ts-radio input {
 
 .ts-badge.is-negative {
     background: var(--ts-negative-500);
-    color: var(--ts-white);
+    color: white;
 }
 
 .ts-badge.is-negative.is-outlined {
@@ -10314,7 +10072,7 @@ fieldset:disabled .ts-radio input {
     font-size: var(--ts-font-size-12px);
 }
 .ts-badge.is-large {
-    font-size: var(--ts-font-size-16px);
+    font-size: var(--ts-font-size-14px);
 }
 
 /**
@@ -10340,6 +10098,7 @@ fieldset:disabled .ts-radio input {
 .ts-badge.is-end-spaced {
     margin-right: 0.45rem;
 }
+
 
 /* ==========================================================================
    Variables
@@ -10548,6 +10307,7 @@ fieldset:disabled .ts-radio input {
     padding-bottom: 0.3rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -10700,7 +10460,7 @@ fieldset:disabled .ts-radio input {
 
 .ts-select select[multiple] option:checked {
     background: var(--ts-primary-700);
-    color: var(--ts-white);
+    color: white;
 }
 
 /**
@@ -10837,82 +10597,13 @@ fieldset:disabled .ts-radio input {
  */
 
 .ts-select.is-dense {
-    --height: var(--ts-input-height-medium-dense);
+    --height: var(--ts-input-height-small);
 }
 
-.ts-select.is-dense.is-small {
-    --height: var(--ts-input-height-small-dense);
-}
 .ts-select.is-dense.is-large {
-    --height: var(--ts-input-height-large-dense);
+    --height: var(--ts-input-height-medium);
 }
 
-/**
- * Wrappable
- */
-
-.ts-select.is-wrappable {
-    min-height: var(--height);
-    height: auto;
-    padding: 0.184em 0;
-}
-
-.ts-select.is-wrappable .content {
-    flex-wrap: wrap;
-}
-
-.ts-select.is-wrappable::after {
-    top: 0.5em;
-    bottom: initial;
-}
-
-/* ==========================================================================
-   Enhanced
-   ========================================================================== */
-
-ts-select {
-    display: inline-block;
-}
-
-ts-select.is-fluid {
-    display: block;
-}
-
-.ts-select[data-tocas="input-select"] select {
-    display: none;
-}
-
-.ts-select[data-tocas="input-combo"] {
-    cursor: text;
-}
-
-.ts-select[data-tocas="input-combo"] select {
-    display: none;
-}
-
-.ts-select input.append {
-    border: 0;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    color: var(--ts-gray-800);
-    font-size: var(--ts-font-size-14px);
-    padding: 0 2.5rem 0 0.9rem;
-    width: 100%;
-    z-index: 1;
-    background: transparent;
-    outline: none;
-}
-
-.ts-select .content.is-ghosting {
-    opacity: 0.5;
-}
-
-.ts-select .content.is-hidden {
-    visibility: hidden;
-}
 
 /* ==========================================================================
    Variables
@@ -10956,6 +10647,7 @@ ts-select.is-fluid {
     padding-bottom: 0.5rem;
     padding-top: 0.25rem;
 }
+
 
 /* ==========================================================================
    Variables
@@ -11152,7 +10844,7 @@ button.ts-text.is-icon-link {
     border-radius: var(--ts-border-radius-secondary);
     background: var(--ts-warning-500);
     padding: 0 0.25rem;
-    color: var(--ts-black);
+    color: black;
     font-size: var(--ts-font-size-14px);
 }
 
@@ -11307,9 +10999,6 @@ button.ts-text.is-icon-link {
     color: var(--ts-negative-600);
 }
 
-.ts-text.is-negative.is-secondary {
-    color: var(--ts-negative-500);
-}
 
 /* ==========================================================================
    Variables
@@ -11564,13 +11253,10 @@ button.ts-text.is-icon-link {
 }
 
 .ts-tab.is-segmented.is-dense {
-    --height: var(--ts-input-height-medium-dense);
-}
-.ts-tab.is-segmented.is-small.is-dense {
-    --height: var(--ts-input-height-small-dense);
+    --height: var(--ts-input-height-small);
 }
 .ts-tab.is-segmented.is-large.is-dense {
-    --height: var(--ts-input-height-large-dense);
+    --height: var(--ts-input-height-medium);
 }
 
 /**
@@ -11580,6 +11266,7 @@ button.ts-text.is-icon-link {
 .ts-tab.is-relaxed {
     --horizontal-padding-multiplier: 1.6;
 }
+
 
 /* ==========================================================================
    Variables
@@ -11708,6 +11395,7 @@ a.ts-box:hover {
     border: 4px dashed var(--ts-gray-300);
     background: transparent;
 }
+
 
 /* ==========================================================================
    Variables
@@ -11877,6 +11565,7 @@ a.ts-box:hover {
     padding-bottom: 0.5rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -12031,6 +11720,7 @@ a.ts-box:hover {
     aspect-ratio: 16 / 9;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -12045,7 +11735,8 @@ a.ts-box:hover {
    ========================================================================== */
 
 .ts-switch {
-    display: inline-flex;
+    display: flex;
+    width: fit-content;
     align-items: flex-start;
     cursor: pointer;
     user-select: none;
@@ -12085,7 +11776,7 @@ a.ts-box:hover {
     border-radius: 100rem;
     top: 3.5px;
     left: 4px;
-    background: var(--ts-white);
+    background: white;
     transition: left 0.1s ease;
     z-index: 1;
 }
@@ -12095,7 +11786,7 @@ a.ts-box:hover {
 }
 
 .ts-switch input:checked::before {
-    background: var(--accent-foreground-color, var(--ts-white));
+    background: var(--accent-foreground-color, white);
     left: 19px;
 }
 
@@ -12109,7 +11800,7 @@ a.ts-box:hover {
 
 .ts-switch:has(:disabled),
 fieldset:disabled .ts-switch {
-    opacity: 0.5;
+    opacity: 0.35;
     pointer-events: none;
     user-select: none;
 }
@@ -12168,6 +11859,7 @@ fieldset:disabled .ts-switch {
     left: 24px;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -12193,7 +11885,7 @@ fieldset:disabled .ts-switch {
 .ts-meta .item:not(:last-child)::after {
     margin: 0 0;
     content: "．";
-    color: var(--ts-gray-500);
+    color: inherit;
     text-decoration: none;
     pointer-events: none;
     user-select: none;
@@ -12259,6 +11951,7 @@ fieldset:disabled .ts-switch {
     font-size: var(--ts-font-size-17px);
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -12314,7 +12007,7 @@ fieldset:disabled .ts-switch {
 .ts-selection input:checked + .text {
     background: var(--accent-color, var(--ts-primary-700));
     border-color: var(--accent-color, var(--ts-primary-700));
-    color: var(--accent-foreground-color, var(--ts-white));
+    color: var(--accent-foreground-color, white);
 }
 
 /* ==========================================================================
@@ -12388,13 +12081,10 @@ fieldset:disabled .ts-switch {
  */
 
 .ts-selection.is-dense {
-    --height: var(--ts-input-height-medium-dense);
+    --height: var(--ts-input-height-small);
 }
-.ts-selection.is-dense.is-small {
-    --height: var(--ts-input-height-small-dense);
-}
-.ts-selection.is-dense.is-small {
-    --height: var(--ts-input-height-large-dense);
+.ts-selection.is-dense.is-large {
+    --height: var(--ts-input-height-medium);
 }
 
 .ts-selection.is-dense .item .text {
@@ -12415,6 +12105,7 @@ fieldset:disabled .ts-switch {
     padding-bottom: 0.3rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -12433,7 +12124,6 @@ fieldset:disabled .ts-switch {
     border-collapse: collapse;
     border-spacing: 0;
     border-color: inherit;
-    vertical-align: inherit;
     text-align: left;
     font-weight: inherit;
     font-size: 14px;
@@ -12463,7 +12153,8 @@ fieldset:disabled .ts-switch {
     background: var(--ts-gray-100);
 }
 
-.ts-table tr th {
+.ts-table tr th,
+.ts-table.is-definition tr td:first-child:not(.is-ignored) {
     color: var(--ts-gray-600);
     font-weight: 500;
 }
@@ -12567,7 +12258,11 @@ fieldset:disabled .ts-switch {
  * Striped
  */
 
-.ts-table.is-striped > tbody > tr:nth-child(even) {
+.ts-table.is-striped:not(.is-basic):not(.is-very-basic) > tbody > tr:nth-child(even) {
+    background: var(--ts-gray-75);
+}
+.ts-table.is-striped.is-basic > tbody > tr:nth-child(odd),
+.ts-table.is-striped.is-very-basic > tbody > tr:nth-child(odd) {
     background: var(--ts-gray-75);
 }
 
@@ -12596,35 +12291,39 @@ fieldset:disabled .ts-switch {
  * Aligns
  */
 
-.ts-table :is(tr, th, td).is-start-aligned {
+.ts-table.is-start-aligned :is(th, td),
+.ts-table :is(tr, th, td).is-start-aligned,
+.ts-table tr.is-start-aligned td {
     text-align: left;
 }
 
-.ts-table :is(th, td).is-center-aligned {
+.ts-table.is-center-aligned :is(th, td),
+.ts-table :is(th, td).is-center-aligned,
+.ts-table tr.is-center-aligned td {
     text-align: center;
 }
 
-.ts-table :is(th, td).is-end-aligned {
+.ts-table.is-end-aligned :is(th, td),
+.ts-table :is(th, td).is-end-aligned,
+.ts-table tr.is-end-aligned td {
     text-align: right;
 }
 
-.ts-table.is-top-aligned :is(th, td) {
+.ts-table.is-top-aligned :is(th, td),
+.ts-table :is(th, td).is-top-aligned,
+.ts-table tr.is-top-aligned td {
     vertical-align: top;
 }
 
-.ts-table :is(th, td).is-top-aligned {
-    vertical-align: top;
-}
-
-.ts-table :is(th, td).is-middle-aligned {
-    vertical-align: middle;
-}
-
+.ts-table.is-middle-aligned :is(th, td),
+.ts-table :is(th, td).is-middle-aligned,
 .ts-table tr.is-middle-aligned td {
     vertical-align: middle;
 }
 
-.ts-table :is(th, td).is-bottom-aligned {
+.ts-table.is-bottom-aligned :is(th, td),
+.ts-table :is(th, td).is-bottom-aligned,
+.ts-table tr.is-bottom-aligned td {
     vertical-align: bottom;
 }
 
@@ -12706,10 +12405,6 @@ fieldset:disabled .ts-switch {
  * Density
  */
 
-.ts-table.is-relaxed :is(thead, tfoot) tr th {
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-}
 .ts-table.is-relaxed tbody tr td,
 .ts-table tbody.is-relaxed tr td,
 .ts-table tbody tr.is-relaxed td {
@@ -12717,10 +12412,6 @@ fieldset:disabled .ts-switch {
     padding-bottom: 0.8rem;
 }
 
-.ts-table.is-dense :is(thead, tfoot) tr th {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-}
 .ts-table.is-dense tbody tr td,
 .ts-table tbody.is-dense tr td,
 .ts-table tbody tr.is-dense td {
@@ -12798,6 +12489,7 @@ fieldset:disabled .ts-switch {
 .ts-table tbody tr td.is-fitted {
     padding: 0;
 }
+
 
 /* ==========================================================================
    Variables
@@ -12998,7 +12690,7 @@ fieldset:disabled .ts-switch {
 
 .ts-procedure .item.is-negative .indicator {
     background: var(--ts-negative-500);
-    color: var(--ts-white);
+    color: white;
     border-color: var(--ts-negative-500);
 }
 
@@ -13111,6 +12803,7 @@ fieldset:disabled .ts-switch {
 .ts-procedure.is-large {
     font-size: var(--ts-font-size-17px);
 }
+
 
 /* ==========================================================================
    Variables
@@ -13472,6 +13165,7 @@ fieldset:disabled .ts-switch {
     max-width: var(--16-wide);
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -13610,6 +13304,7 @@ fieldset:disabled .ts-switch {
     font-size: var(--ts-font-size-18px);
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -13626,11 +13321,10 @@ fieldset:disabled .ts-switch {
 .ts-chip {
     vertical-align: middle;
     text-decoration: none;
-}
+    gap: initial;
+    line-height: initial;
+    min-width: initial;
 
-.ts-chip,
-.ts-chip.is-input .content,
-.ts-chip.is-toggle .content {
     background: var(--ts-gray-200);
     padding: 0.1rem 0.6rem;
     border: 1px solid var(--ts-gray-200);
@@ -13642,22 +13336,7 @@ fieldset:disabled .ts-switch {
     gap: 0.5rem;
     line-height: 1.75;
     min-height: 22px;
-    /*min-width: 55px;*/
     color: var(--accent-color, var(--ts-gray-800));
-}
-
-.ts-chip.is-input,
-.ts-chip.is-toggle {
-    background: initial;
-    padding: initial;
-    border: initial;
-
-    font-size: initial;
-    display: initial;
-    gap: initial;
-    line-height: initial;
-    min-height: initial;
-    min-width: initial;
 }
 
 /* ==========================================================================
@@ -13683,8 +13362,7 @@ fieldset:disabled .ts-switch {
  * Outlined
  */
 
-.ts-chip.is-outlined,
-.ts-chip.is-outlined .content {
+.ts-chip.is-outlined {
     background: transparent;
     border-color: var(--ts-gray-300);
 }
@@ -13693,8 +13371,7 @@ fieldset:disabled .ts-switch {
  * Circular
  */
 
-.ts-chip.is-circular,
-.ts-chip.is-circular .content {
+.ts-chip.is-circular {
     border-radius: 100rem;
 }
 
@@ -13702,45 +13379,28 @@ fieldset:disabled .ts-switch {
  * Input
  */
 
-.ts-chip.is-input,
-.ts-chip.is-toggle {
+.ts-chip:has(input) {
     cursor: pointer;
     user-select: none;
-}
-
-/**
- * Toggle
- */
-
-.ts-chip.is-toggle input:checked + .content {
-    background: var(--accent-color, var(--ts-gray-800));
-    border-color: var(--accent-color, var(--ts-gray-800));
-    color: var(--accent-foreground-color, var(--ts-gray-50));
-}
-
-.ts-chip.is-toggle.is-secondary input:checked + .content {
-    color: var(--accent-color, var(--ts-gray-800));
-    background: var(--ts-gray-200);
-    border-color: var(--accent-color, var(--ts-gray-600));
 }
 
 /**
  * Input
  */
 
-.ts-chip.is-input input:checked + .content {
+.ts-chip:has(input:checked) {
     background: var(--accent-color, var(--ts-primary-700));
     border-color: var(--accent-color, var(--ts-primary-700));
-    color: var(--accent-foreground-color, var(--ts-white));
+    color: var(--accent-foreground-color, white);
 }
 
-.ts-chip.is-input.is-secondary input:checked + .content {
+.ts-chip:has(input:checked).is-outlined {
     color: var(--accent-color, var(--ts-primary-600));
     background: var(--ts-gray-100);
     border-color: var(--accent-color, var(--ts-primary-600));
 }
 
-.ts-chip.is-input input:checked + .content::before {
+.ts-chip:has(input:checked)::before {
     font-family: "Icons";
     font-weight: normal;
     font-style: normal;
@@ -13754,13 +13414,13 @@ fieldset:disabled .ts-switch {
     font-size: 12px;
 }
 
-.ts-chip.is-input.is-start-icon input:checked + .content::before,
-.ts-chip.is-input.is-end-icon input:checked + .content::before {
+.ts-chip:has(input:checked).is-start-icon::before,
+.ts-chip:has(input:checked).is-end-icon::before {
     display: none;
 }
 
-.ts-chip.is-input.is-start-icon input:checked + .content .ts-icon::before,
-.ts-chip.is-input.is-end-icon input:checked + .content .ts-icon::before {
+.ts-chip:has(input:checked).is-start-icon .ts-icon::before,
+.ts-chip:has(input:checked).is-end-icon .ts-icon::before {
     content: "\f00c";
 }
 
@@ -13783,9 +13443,6 @@ fieldset:disabled .ts-chip {
 
 .ts-chip.is-fluid {
     display: flex;
-}
-
-.ts-chip.is-fluid .content {
     width: 100%;
 }
 
@@ -13793,13 +13450,11 @@ fieldset:disabled .ts-chip {
  * Sizes
  */
 
-.ts-chip.is-small,
-.ts-chip.is-small .content {
+.ts-chip.is-small {
     font-size: var(--ts-font-size-12px);
 }
 
-.ts-chip.is-large,
-.ts-chip.is-large .content {
+.ts-chip.is-large {
     font-size: var(--ts-font-size-16px);
 }
 
@@ -13813,7 +13468,7 @@ fieldset:disabled .ts-chip {
     line-height: 1.5;
 }
 
-.ts-chip.is-dense:is(.is-input, .is-toggle) .content {
+.ts-chip.is-dense:has(input) {
     min-height: 20px;
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
@@ -13828,6 +13483,10 @@ fieldset:disabled .ts-chip {
     margin-left: 0.45rem;
 }
 .ts-chip.is-end-spaced {
+    margin-right: 0.45rem;
+}
+.ts-chip.is-spaced {
+    margin-left: 0.45rem;
     margin-right: 0.45rem;
 }
 
@@ -13962,6 +13621,7 @@ fieldset:disabled .ts-close {
     margin-right: 0.45rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -14042,6 +13702,7 @@ fieldset:disabled .ts-close {
 .ts-loading.is-large::after {
     font-size: 2.8rem;
 }
+
 
 /* ==========================================================================
    Variables
@@ -14177,6 +13838,7 @@ fieldset:disabled .ts-close {
     font-size: var(--ts-font-size-17px);
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -14245,6 +13907,7 @@ fieldset:disabled .ts-close {
 .ts-list.is-large {
     font-size: var(--ts-font-size-17px);
 }
+
 
 /* ==========================================================================
    https://flagicons.lipis.dev/
@@ -15917,6 +15580,7 @@ fieldset:disabled .ts-close {
     background-image: url("./flags/1x1/zz.svg");
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -16076,6 +15740,7 @@ fieldset:disabled .ts-close {
     font-size: 2rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -16164,6 +15829,7 @@ fieldset:disabled .ts-close {
     padding-bottom: 0.45rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -16187,7 +15853,7 @@ fieldset:disabled .ts-close {
    ========================================================================== */
 
 .ts-app-navbar .item {
-    color: var(--ts-gray-500);
+    color: var(--ts-gray-800);
     text-decoration: none;
     text-align: center;
     display: inline-flex;
@@ -16208,6 +15874,18 @@ fieldset:disabled .ts-close {
 .ts-app-navbar .item .ts-icon {
     line-height: 1.2;
     font-size: 1.2rem;
+    padding: 0.25rem 1rem;
+    display: flex;
+    min-height: 26px;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    border-radius: 100rem;
+}
+
+.ts-app-navbar .item.is-active .ts-icon {
+    background: var(--accent-color, var(--ts-gray-900));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
 }
 
 .ts-app-navbar .item .label {
@@ -16228,14 +15906,6 @@ fieldset:disabled .ts-close {
 
 .ts-app-navbar.is-fluid .item {
     flex: 1;
-}
-
-/**
- * Unlabeled
- */
-
-.ts-app-navbar.is-unlabeled .item:not(.is-active) .label {
-    display: none;
 }
 
 /**
@@ -16281,45 +15951,6 @@ fieldset:disabled .ts-close {
     padding-top: 0;
 }
 
-/**
- * Indicated
- */
-
-.ts-app-navbar.is-indicated .item {
-    color: var(--ts-gray-800);
-}
-
-.ts-app-navbar.is-indicated .item .ts-icon {
-    padding: 0.25rem 1rem;
-    line-height: 1.2;
-    font-size: 1.2rem;
-    display: flex;
-    min-height: 26px;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    border-radius: 100rem;
-}
-
-.ts-app-navbar.is-indicated .item.is-active .ts-icon {
-    background: var(--accent-color, var(--ts-gray-800));
-    color: var(--accent-foreground-color, var(--ts-gray-50));
-}
-
-/**
- * Dense
- */
-
-.ts-app-navbar.is-dense .item {
-    gap: 0.25rem;
-}
-
-.ts-app-navbar.is-dense.is-indicated .item .ts-icon {
-    padding-top: 0.15rem;
-    padding-bottom: 0.15rem;
-    min-height: 25px;
-}
-
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -16329,8 +15960,8 @@ fieldset:disabled .ts-close {
    ========================================================================== */
 
 .ts-snackbar {
-    background: var(--ts-static-gray-800);
-    color: var(--ts-white);
+    background: var(--ts-light-gray-800);
+    color: white;
     display: inline-flex;
     padding: 0.35rem 1rem;
     border-radius: var(--ts-border-radius-element);
@@ -16435,6 +16066,7 @@ fieldset:disabled .ts-close {
     color: var(--ts-negative-500);
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -16471,7 +16103,7 @@ details.ts-accordion summary {
     cursor: pointer;
 }
 
-details.ts-accordion summary::before {
+details.ts-accordion summary::after {
     font-family: "Icons";
     font-weight: normal;
     font-style: normal;
@@ -16482,12 +16114,11 @@ details.ts-accordion summary::before {
     -webkit-font-smoothing: antialiased;
     backface-visibility: hidden;
     display: block;
-    margin-right: 0.7rem;
     color: var(--ts-gray-600);
-    transform: rotate(270deg);
     content: "\f078";
     line-height: 1;
     font-size: 14px;
+    margin-left: auto;
 }
 
 /* ==========================================================================
@@ -16498,12 +16129,26 @@ details.ts-accordion summary::before {
  * Open
  */
 
-details.ts-accordion[open] summary::before {
-    transform: rotate(0deg);
+/** > selector to prevent inheritance issues */
+/** https://github.com/teacat/tocas/issues/1072 */
+details.ts-accordion[open] > summary::after {
+    content: "\f077";
 }
 
 details.ts-accordion[open] summary {
     margin-bottom: 0.5rem;
+}
+
+/**
+ * Plus Sign
+ */
+
+details.ts-accordion.is-plus-sign[open] > summary::after {
+    content: "\f068";
+}
+
+details.ts-accordion.is-plus-sign summary::after {
+    content: "\2b";
 }
 
 /* ==========================================================================
@@ -16592,6 +16237,7 @@ details.ts-accordion[open] summary {
 .ts-mask.is-faded.is-bottom {
     background: linear-gradient(to top, rgb(0 0 0 / 50%) 0%, rgba(0, 0, 0, 0) 100%);
 }
+
 
 /* ==========================================================================
    Variables
@@ -16759,6 +16405,7 @@ a.ts-header:hover {
     line-height: 1.3;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -16862,6 +16509,7 @@ a.ts-header:hover {
 .ts-quote.is-large {
     font-size: var(--ts-font-size-17px);
 }
+
 
 /* ==========================================================================
    Variables
@@ -16978,6 +16626,7 @@ a.ts-header:hover {
     background: var(--ts-page-background-tertiary);
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -17059,6 +16708,7 @@ a.ts-header:hover {
     --gap: 0.5rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -17114,6 +16764,7 @@ a.ts-header:hover {
 .ts-container.is-fluid {
     --width: 100%;
 }
+
 
 /* ==========================================================================
    Variables
@@ -17212,12 +16863,14 @@ a.ts-header:hover {
     max-width: 90%;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
 
 .ts-menu {
     --object-distance: 0.8rem;
+    --indicator-width: 2px;
     --accent-color: initial;
     --accent-foreground-color: initial;
 }
@@ -17252,11 +16905,6 @@ a.ts-header:hover {
     font-size: 1.1em;
 }
 
-.ts-menu .item .ts-badge {
-    margin-left: auto;
-    margin-top: -1px;
-}
-
 .ts-menu .item .description {
     font-size: var(--ts-relative-small);
     color: var(--ts-gray-500);
@@ -17264,6 +16912,16 @@ a.ts-header:hover {
     text-align: right;
     margin-left: auto;
     float: right;
+}
+
+.ts-menu .item .badge {
+    line-height: 1;
+    font-size: var(--ts-relative-tiny);
+    background: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+    padding: .2rem .5rem;
+    border-radius: 100rem;
+    margin-left: auto;
 }
 
 .ts-menu .item:hover {
@@ -17283,9 +16941,18 @@ a.ts-header:hover {
  * Active
  */
 
-.ts-menu .item.is-active {
+.ts-menu:not(.is-start-indicated):not(.is-end-indicated) .item.is-active {
     background: var(--accent-color, var(--ts-gray-800));
     color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+
+/**
+ * Secondary
+ */
+
+.ts-menu.is-secondary.is-secondary.is-secondary .item.is-active {
+    background: var(--ts-gray-100);
+    color: var(--accent-color, var(--ts-gray-800));
 }
 
 /**
@@ -17313,7 +16980,7 @@ a.ts-header:hover {
 
 .ts-menu .item.is-selected {
     background: var(--accent-color, var(--ts-primary-700));
-    color: var(--accent-foreground-color, var(--ts-white));
+    color: var(--accent-foreground-color, white);
 }
 
 /**
@@ -17326,6 +16993,54 @@ a.ts-header:hover {
 
 .ts-menu.is-separated .item {
     border-radius: var(--ts-border-radius-element);
+}
+
+/**
+ * Indicated
+ */
+
+.ts-menu.is-start-indicated .item.is-active,
+.ts-menu.is-end-indicated .item.is-active {
+    background: var(--ts-gray-75);
+}
+
+.ts-menu.is-start-indicated .item:not(.is-active):hover,
+.ts-menu.is-end-indicated .item:not(.is-active):hover {
+    background: transparent;
+    opacity: 0.85;
+}
+
+.ts-menu.is-start-indicated .item {
+    border-left: var(--indicator-width) solid var(--ts-gray-300);
+}
+
+.ts-menu.is-start-indicated .item.is-active {
+    border-left-color: var(--accent-color, var(--ts-gray-800))
+}
+
+.ts-menu.is-end-indicated .item {
+    border-right: var(--indicator-width) solid var(--ts-gray-300);
+}
+
+.ts-menu.is-end-indicated .item.is-active {
+    border-right-color: var(--accent-color, var(--ts-gray-800))
+}
+
+.ts-menu.is-start-indicated.is-separated,
+.ts-menu.is-end-indicated.is-separated {
+    --indicator-width: 3px;
+
+    gap: 0;
+}
+
+.ts-menu.is-start-indicated.is-separated .item,
+.ts-menu.is-end-indicated.is-separated .item {
+    border-radius: 0
+}
+
+.ts-menu.is-start-indicated.is-separated .item:not(.is-active),
+.ts-menu.is-end-indicated.is-separated .item:not(.is-active) {
+    border-color: transparent
 }
 
 /**
@@ -17392,6 +17107,7 @@ a.ts-header:hover {
     padding-left: 3.5rem;
     padding-right: 3.5rem;
 }
+
 
 /* ==========================================================================
    Variables
@@ -17506,6 +17222,7 @@ a.ts-header:hover {
     background: var(--ts-tonal-warning-400);
     color: var(--ts-tonal-warning-800);
 }
+
 
 /* ==========================================================================
    Variables
@@ -17656,6 +17373,7 @@ a.ts-header:hover {
     gap: 0.5rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -17725,6 +17443,7 @@ a.ts-header:hover {
     box-sizing: border-box;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -17746,6 +17465,7 @@ a.ts-header:hover {
 .ts-conversation .avatar img {
     width: 40px;
     border-radius: var(--ts-border-radius-element);
+    vertical-align: top;
 }
 
 /**
@@ -17803,7 +17523,7 @@ a.ts-header:hover {
     background: rgba(0, 0, 0, 0.2);
     border-radius: var(--ts-border-radius-element);
     padding: 0.1rem 0.4rem;
-    color: var(--ts-white);
+    color: white;
 }
 
 /**
@@ -17936,7 +17656,7 @@ a.ts-header:hover {
 
 .ts-conversation.is-self .bubble {
     background: #e8fbd1;
-    color: var(--ts-black);
+    color: black;
 }
 
 .ts-conversation.is-self .bubble .author {
@@ -17967,12 +17687,13 @@ a.ts-header:hover {
     background: rgba(0, 0, 0, 0.2);
     border-radius: var(--ts-border-radius-element);
     padding: 0.1rem 0.4rem;
-    color: var(--ts-white);
+    color: white;
 }
 
 .ts-conversation.is-object-only .bubble .meta::after {
-    color: var(--ts-white);
+    color: white;
 }
+
 
 /* ==========================================================================
    Variables
@@ -18001,6 +17722,7 @@ dialog.ts-modal {
     height: auto;
     width: auto;
     outline: none;
+    color: inherit;
     z-index: var(--ts-z-modal);
 }
 
@@ -18076,6 +17798,7 @@ dialog.ts-modal.is-fullscreen > .content {
     box-shadow: none;
     margin: 0;
 }
+
 
 /* ==========================================================================
    Variables
@@ -18201,6 +17924,7 @@ dialog.ts-modal.is-fullscreen > .content {
     --size: 6rem;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -18271,6 +17995,7 @@ dialog.ts-modal.is-fullscreen > .content {
    Variations
    ========================================================================== */
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -18320,7 +18045,9 @@ dialog.ts-modal.is-fullscreen > .content {
     overflow-x: hidden;
 }
 
-.ts-dropdown > .item {
+.ts-dropdown a.item,
+.ts-dropdown button.item,
+.ts-dropdown input.item {
     font-family: inherit;
     appearance: none;
     border: unset;
@@ -18434,7 +18161,7 @@ dialog.ts-modal.is-fullscreen > .content {
 
 .ts-dropdown .item.is-selected {
     background: var(--accent-color, var(--ts-primary-700));
-    color: var(--accent-foreground-color, var(--ts-white));
+    color: var(--accent-foreground-color, white);
 }
 
 .ts-dropdown .item.is-selected .ts-icon {
@@ -18583,6 +18310,7 @@ dialog.ts-modal.is-fullscreen > .content {
     min-width: min-content;
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -18600,8 +18328,8 @@ dialog.ts-modal.is-fullscreen > .content {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     padding: 0.5rem 1rem;
-    background: var(--accent-color, var(--ts-static-gray-900));
-    color: var(--accent-foreground-color, var(--ts-white));
+    background: var(--accent-color, var(--ts-light-gray-900));
+    color: var(--accent-foreground-color, white);
     min-height: 50px;
     align-items: center;
     gap: 0.5rem;
@@ -18672,6 +18400,7 @@ dialog.ts-modal.is-fullscreen > .content {
 /* ==========================================================================
    Variations
    ========================================================================== */
+
 
 /* ==========================================================================
    Variables
@@ -18789,6 +18518,7 @@ dialog.ts-app-drawer:popover-open {
 .ts-app-drawer.is-fullscreen {
     --width: 100%;
 }
+
 
 /* ==========================================================================
    Variables
@@ -18925,7 +18655,6 @@ dialog.ts-app-drawer:popover-open {
     margin-bottom: var(--ts-timeline-content-distance);
 }
 
-
 /* ==========================================================================
    Variations
    ========================================================================== */
@@ -18966,7 +18695,7 @@ dialog.ts-app-drawer:popover-open {
 
 .ts-timeline > .item.is-negative .indicator .ts-icon {
     background: var(--ts-negative-500);
-    color: var(--ts-white);
+    color: white;
 }
 
 .ts-timeline > .item.is-negative.is-secondary .indicator .ts-icon {
@@ -19005,6 +18734,7 @@ dialog.ts-app-drawer:popover-open {
 .ts-timeline.is-compact {
     --ts-timeline-content-distance: 0.5rem;
 }
+
 
 /* ==========================================================================
    Variables
@@ -19142,6 +18872,7 @@ dialog.ts-app-drawer:popover-open {
     --header-distance: var(--ts-space-gap);
 }
 
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -19175,12 +18906,16 @@ dialog.ts-app-drawer:popover-open {
 .ts-app-center > .content {
 }
 
+
 /**
  * Padded
  */
 
 .has-padded {
     padding: var(--ts-space-gap) !important;
+}
+.has-padded-tiny {
+    padding: var(--ts-space-gap-tiny) !important;
 }
 .has-padded-small {
     padding: var(--ts-space-gap-small) !important;
@@ -19199,6 +18934,10 @@ dialog.ts-app-drawer:popover-open {
 .has-horizontally-padded {
     padding-left: var(--ts-space-gap) !important;
     padding-right: var(--ts-space-gap) !important;
+}
+.has-horizontally-padded-tiny {
+    padding-left: var(--ts-space-gap-tiny) !important;
+    padding-right: var(--ts-space-gap-tiny) !important;
 }
 .has-horizontally-padded-small {
     padding-left: var(--ts-space-gap-small) !important;
@@ -19222,6 +18961,10 @@ dialog.ts-app-drawer:popover-open {
     padding-top: var(--ts-space-gap) !important;
     padding-bottom: var(--ts-space-gap) !important;
 }
+.has-vertically-padded-tiny {
+    padding-top: var(--ts-space-gap-tiny) !important;
+    padding-bottom: var(--ts-space-gap-tiny) !important;
+}
 .has-vertically-padded-small {
     padding-top: var(--ts-space-gap-small) !important;
     padding-bottom: var(--ts-space-gap-small) !important;
@@ -19243,6 +18986,9 @@ dialog.ts-app-drawer:popover-open {
 .has-bottom-padded {
     padding-bottom: var(--ts-space-gap) !important;
 }
+.has-bottom-padded-tiny {
+    padding-bottom: var(--ts-space-gap-tiny) !important;
+}
 .has-bottom-padded-small {
     padding-bottom: var(--ts-space-gap-small) !important;
 }
@@ -19259,6 +19005,9 @@ dialog.ts-app-drawer:popover-open {
 /** Top */
 .has-top-padded {
     padding-top: var(--ts-space-gap) !important;
+}
+.has-top-padded-tiny {
+    padding-top: var(--ts-space-gap-tiny) !important;
 }
 .has-top-padded-small {
     padding-top: var(--ts-space-gap-small) !important;
@@ -19277,6 +19026,9 @@ dialog.ts-app-drawer:popover-open {
 .has-start-padded {
     padding-left: var(--ts-space-gap) !important;
 }
+.has-start-padded-tiny {
+    padding-left: var(--ts-space-gap-tiny) !important;
+}
 .has-start-padded-small {
     padding-left: var(--ts-space-gap-small) !important;
 }
@@ -19293,6 +19045,9 @@ dialog.ts-app-drawer:popover-open {
 /** End */
 .has-end-padded {
     padding-right: var(--ts-space-gap) !important;
+}
+.has-end-padded-tiny {
+    padding-right: var(--ts-space-gap-tiny) !important;
 }
 .has-end-padded-small {
     padding-right: var(--ts-space-gap-small) !important;
@@ -19323,10 +19078,10 @@ dialog.ts-app-drawer:popover-open {
     padding-right: 0 !important;
 }
 .has-start-fitted {
-    padding-right: 0 !important;
+    padding-left: 0 !important;
 }
 .has-end-fitted {
-    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 .has-top-fitted {
     padding-top: 0 !important;
@@ -19341,6 +19096,9 @@ dialog.ts-app-drawer:popover-open {
 
 .has-spaced {
     margin: 1rem !important;
+}
+.has-spaced-tiny {
+    margin: var(--ts-space-gap-tiny) !important;
 }
 .has-spaced-small {
     margin: var(--ts-space-gap-small) !important;
@@ -19359,6 +19117,10 @@ dialog.ts-app-drawer:popover-open {
 .has-horizontally-spaced {
     margin-left: var(--ts-space-gap) !important;
     margin-right: var(--ts-space-gap) !important;
+}
+.has-horizontally-spaced-tiny {
+    margin-left: var(--ts-space-gap-tiny) !important;
+    margin-right: var(--ts-space-gap-tiny) !important;
 }
 .has-horizontally-spaced-small {
     margin-left: var(--ts-space-gap-small) !important;
@@ -19382,6 +19144,10 @@ dialog.ts-app-drawer:popover-open {
     margin-top: var(--ts-space-gap) !important;
     margin-bottom: var(--ts-space-gap) !important;
 }
+.has-vertically-spaced-tiny {
+    margin-top: var(--ts-space-gap-tiny) !important;
+    margin-bottom: var(--ts-space-gap-tiny) !important;
+}
 .has-vertically-spaced-small {
     margin-top: var(--ts-space-gap-small) !important;
     margin-bottom: var(--ts-space-gap-small) !important;
@@ -19403,6 +19169,9 @@ dialog.ts-app-drawer:popover-open {
 .has-bottom-spaced {
     margin-bottom: var(--ts-space-gap) !important;
 }
+.has-bottom-spaced-tiny {
+    margin-bottom: var(--ts-space-gap-tiny) !important;
+}
 .has-bottom-spaced-small {
     margin-bottom: var(--ts-space-gap-small) !important;
 }
@@ -19419,6 +19188,9 @@ dialog.ts-app-drawer:popover-open {
 /** Top */
 .has-top-spaced {
     margin-top: var(--ts-space-gap) !important;
+}
+.has-top-spaced-tiny {
+    margin-top: var(--ts-space-gap-tiny) !important;
 }
 .has-top-spaced-small {
     margin-top: var(--ts-space-gap-small) !important;
@@ -19437,6 +19209,9 @@ dialog.ts-app-drawer:popover-open {
 .has-start-spaced {
     margin-left: var(--ts-space-gap) !important;
 }
+.has-start-spaced-tiny {
+    margin-left: var(--ts-space-gap-tiny) !important;
+}
 .has-start-spaced-small {
     margin-left: var(--ts-space-gap-small) !important;
 }
@@ -19453,6 +19228,9 @@ dialog.ts-app-drawer:popover-open {
 /** End */
 .has-end-spaced {
     margin-right: var(--ts-space-gap) !important;
+}
+.has-end-spaced-tiny {
+    margin-right: var(--ts-space-gap-tiny) !important;
 }
 .has-end-spaced-small {
     margin-right: var(--ts-space-gap-small) !important;
@@ -19515,19 +19293,6 @@ dialog.ts-app-drawer:popover-open {
     border-right: 0 !important;
     border-radius: 0 !important;
 }
-/*.has-topleft-borderless {
-    border: 0 !important;
-}
-.has-borderless {
-    border: 0 !important;
-}
-.has-borderless-x { or horizontal
-    border-left: 0 !important;
-    border-right: 0 !important;
-}
-.has-radiusless {
-    border-radius: 0 !important;
-}*/
 
 /**
  * Line Height
@@ -19590,10 +19355,10 @@ dialog.ts-app-drawer:popover-open {
  */
 
 .has-text-white {
-    color: var(--ts-white) !important;
+    color: white !important;
 }
 .has-text-black {
-    color: var(--ts-black) !important;
+    color: black !important;
 }
 
 /**
@@ -19630,70 +19395,6 @@ dialog.ts-app-drawer:popover-open {
 
 .has-pointer-events-none {
     pointer-events: none !important;
-}
-
-/**
- * Hover
- */
-
-.has-hover-fadein {
-    opacity: 0.7;
-}
-.has-hover-fadein:hover {
-    opacity: 1;
-}
-
-.has-hover-fadeout {
-    opacity: 1;
-}
-.has-hover-fadeout:hover {
-    opacity: 0.7;
-}
-
-.has-hover-target {
-    text-decoration: none;
-    color: inherit;
-}
-.has-hover-target:hover .has-target-link {
-    color: var(--ts-link-700);
-}
-.has-hover-target:hover .has-target-underline {
-    text-decoration: underline;
-}
-
-/**
- * Link Overlay
- */
-
-.has-stretched-link {
-    position: relative;
-}
-
-.has-stretched-link a[href]:not(.has-link-target),
-.has-stretched-link button:not(.has-link-target) {
-    position: relative;
-    z-index: 1;
-}
-
-.has-stretched-link .has-link-target {
-    position: static;
-    text-decoration: none;
-}
-
-.has-stretched-link .has-link-target:hover {
-    text-decoration: none;
-}
-
-.has-stretched-link .has-link-target::before {
-    content: "";
-    cursor: inherit;
-    display: block;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
 }
 
 /**
@@ -19736,6 +19437,37 @@ dialog.ts-app-drawer:popover-open {
 }
 
 /**
+ * Background
+ */
+
+.has-background-transparent {
+    background-color: transparent !important;
+}
+.has-gray-background-50 {
+    background-color: var(--ts-gray-background-50) !important;
+}
+.has-gray-background-75 {
+    background-color: var(--ts-gray-background-75) !important;
+}
+.has-gray-background-100 {
+    background-color: var(--ts-gray-background-100) !important;
+}
+
+/**
+ * Vertical Aligns
+ */
+
+.has-top-aligned {
+    vertical-align: top !important;
+}
+.has-middle-aligned {
+    vertical-align: middle !important;
+}
+.has-bottom-aligned {
+    vertical-align: bottom !important;
+}
+
+/**
  * Accent
  */
 
@@ -19743,6 +19475,7 @@ dialog.ts-app-drawer:popover-open {
     --accent-color: var(--ts-accent-color);
     --accent-foreground-color: var(--ts-accent-foreground-color);
 }
+
 
 /* ==========================================================================
    Variables
@@ -19771,6 +19504,7 @@ dialog.ts-app-drawer:popover-open {
 /* ==========================================================================
    Structure
    ========================================================================== */
+
 
 /* ==========================================================================
    Variables
@@ -19855,151 +19589,14 @@ fieldset:disabled .ts-range input {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ==========================================================================
-   Variables
+   Colors
    ========================================================================== */
 
-html {
-    --ts-white: #fff;
-    --ts-black: #333;
-
-    --ts-accent-color: unset;
-    --ts-accent-foreground-color: var(--ts-white);
-
-    --ts-breakpoint-mobile-min: 0px;
-    --ts-breakpoint-mobile-max: 767.98px;
-    --ts-breakpoint-tablet-min: 768px;
-    --ts-breakpoint-tablet-max: 1023.98px;
-    --ts-breakpoint-desktop-min: 1024px;
-    --ts-breakpoint-desktop-max: 1279.98px;
-    --ts-breakpoint-widescreen-min: 1280px;
-    --ts-breakpoint-widescreen-max: 9999px;
-
-    --ts-light-gray-50: rgb(255, 255, 255);
-    --ts-light-gray-75: rgb(250, 250, 250);
-    --ts-light-gray-100: rgb(242, 242, 242);
-    --ts-light-gray-200: rgb(238, 238, 238);
-    --ts-light-gray-300: rgb(225, 225, 225);
-    --ts-light-gray-400: rgb(215, 215, 215);
-    --ts-light-gray-500: rgb(118, 118, 118);
-    --ts-light-gray-600: rgb(90, 90, 90);
-    --ts-light-gray-700: rgb(70, 70, 70);
-    --ts-light-gray-800: rgb(55, 55, 55);
-    --ts-light-gray-900: rgb(48, 48, 48);
-
-    --ts-dark-gray-50: rgb(39, 39, 39);
-    --ts-dark-gray-75: rgb(47, 47, 47);
-    --ts-dark-gray-100: rgb(51, 51, 51);
-    --ts-dark-gray-200: rgb(56, 56, 56);
-    --ts-dark-gray-300: rgb(71, 71, 71);
-    --ts-dark-gray-400: rgb(92, 92, 92);
-    --ts-dark-gray-500: rgb(189, 189, 189);
-    --ts-dark-gray-600: rgb(229, 229, 229);
-    --ts-dark-gray-700: rgb(233, 233, 233);
-    --ts-dark-gray-800: rgb(238, 238, 238);
-    --ts-dark-gray-900: rgb(255, 255, 255);
-
-    --ts-static-gray-50: var(--ts-light-gray-50);
-    --ts-static-gray-75: var(--ts-light-gray-75);
-    --ts-static-gray-100: var(--ts-light-gray-100);
-    --ts-static-gray-200: var(--ts-light-gray-200);
-    --ts-static-gray-300: var(--ts-light-gray-300);
-    --ts-static-gray-400: var(--ts-light-gray-400);
-    --ts-static-gray-500: var(--ts-light-gray-500);
-    --ts-static-gray-600: var(--ts-light-gray-600);
-    --ts-static-gray-700: var(--ts-light-gray-700);
-    --ts-static-gray-800: var(--ts-light-gray-800);
-    --ts-static-gray-900: var(--ts-light-gray-900);
-
-    --ts-static-primary-400: #40a9ff;
-    --ts-static-primary-500: #1890ff;
-    --ts-static-primary-600: #096dd9;
-    --ts-static-primary-700: #0050b3;
-    --ts-static-primary-800: #003a8c;
-    --ts-static-primary-900: #002766;
-
-    --ts-static-warning-400: #ffec3d;
-    --ts-static-warning-500: #fadb14;
-    --ts-static-warning-600: #d4b106;
-    --ts-static-warning-700: #ad8b00;
-    --ts-static-warning-800: #876800;
-    --ts-static-warning-900: #614700;
-
-    --ts-static-positive-400: #73d13d;
-    --ts-static-positive-500: #52c41a;
-    --ts-static-positive-600: #389e0d;
-    --ts-static-positive-700: #237804;
-    --ts-static-positive-800: #135200;
-    --ts-static-positive-900: #092b00;
-
-    --ts-static-negative-400: #ff4d4f;
-    --ts-static-negative-500: #f5222d;
-    --ts-static-negative-600: #cf1322;
-    --ts-static-negative-700: #a8071a;
-    --ts-static-negative-800: #820014;
-    --ts-static-negative-900: #5c0011;
+:root {
+    /**
+     * Static
+     */
 
     --ts-primary-400: #40a9ff;
     --ts-primary-500: #1890ff;
@@ -20007,8 +19604,6 @@ html {
     --ts-primary-700: #0050b3;
     --ts-primary-800: #003a8c;
     --ts-primary-900: #002766;
-
-    --ts-link-700: #0050b3;
 
     --ts-warning-400: #ffec3d;
     --ts-warning-500: #fadb14;
@@ -20031,6 +19626,203 @@ html {
     --ts-negative-800: #820014;
     --ts-negative-900: #5c0011;
 
+    /**
+     * Light
+     */
+
+    --ts-light-gray-50: rgb(255, 255, 255);
+    --ts-light-gray-75: rgb(250, 250, 250);
+    --ts-light-gray-100: rgb(242, 242, 242);
+    --ts-light-gray-200: rgb(238, 238, 238);
+    --ts-light-gray-300: rgb(225, 225, 225);
+    --ts-light-gray-400: rgb(215, 215, 215);
+    --ts-light-gray-500: rgb(118, 118, 118);
+    --ts-light-gray-600: rgb(90, 90, 90);
+    --ts-light-gray-700: rgb(70, 70, 70);
+    --ts-light-gray-800: rgb(55, 55, 55);
+    --ts-light-gray-900: rgb(48, 48, 48);
+
+    --ts-light-link-700: #0050b3;
+
+    --ts-light-tonal-positive-400: #cdffbe;
+    --ts-light-tonal-positive-800: #357016;
+
+    --ts-light-tonal-negative-400: #ffbebe;
+    --ts-light-tonal-negative-800: #701616;
+
+    --ts-light-tonal-primary-400: #d9edff;
+    --ts-light-tonal-primary-800: #005cde;
+
+    --ts-light-tonal-warning-400: #fff7ae;
+    --ts-light-tonal-warning-800: #866800;
+
+    --ts-light-page-background-default: var(--ts-gray-50);
+    --ts-light-page-background-secondary: var(--ts-gray-75);
+    --ts-light-page-background-tertiary: var(--ts-gray-100);
+
+    --ts-light-elevated-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+    --ts-light-elevated-shadow-modal: 0 0 20px rgba(0, 0, 0, 0.1);
+    --ts-light-elevated-shadow-drawer: 0 0 20px rgba(0, 0, 0, 0.1);
+
+    /**
+     * Dark
+     */
+
+    --ts-dark-gray-50: rgb(39, 39, 39);
+    --ts-dark-gray-75: rgb(47, 47, 47);
+    --ts-dark-gray-100: rgb(51, 51, 51);
+    --ts-dark-gray-200: rgb(56, 56, 56);
+    --ts-dark-gray-300: rgb(71, 71, 71);
+    --ts-dark-gray-400: rgb(92, 92, 92);
+    --ts-dark-gray-500: rgb(189, 189, 189);
+    --ts-dark-gray-600: rgb(229, 229, 229);
+    --ts-dark-gray-700: rgb(233, 233, 233);
+    --ts-dark-gray-800: rgb(238, 238, 238);
+    --ts-dark-gray-900: rgb(255, 255, 255);
+
+    --ts-dark-link-700: #a6a6f6;
+
+    --ts-dark-tonal-positive-400: #92d34f;
+    --ts-dark-tonal-positive-800: #0e4600;
+
+    --ts-dark-tonal-negative-400: #d60000;
+    --ts-dark-tonal-negative-800: #fff;
+
+    --ts-dark-tonal-primary-400: #0a6ffd;
+    --ts-dark-tonal-primary-800: #ffffff;
+
+    --ts-dark-tonal-warning-400: #edff00;
+    --ts-dark-tonal-warning-800: #463f00;
+
+    --ts-dark-page-background-default: var(--ts-dark-gray-50);
+    --ts-dark-page-background-secondary: rgb(30, 30, 30);
+    --ts-dark-page-background-tertiary: rgb(23, 23, 23);
+
+    --ts-dark-elevated-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
+    --ts-dark-elevated-shadow-modal: 0 0 20px rgba(0, 0, 0, 0.5);
+    --ts-dark-elevated-shadow-drawer: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   Definitions
+   ========================================================================== */
+
+:root {
+    --ts-accent-color: unset;
+    --ts-accent-foreground-color: white;
+
+    --ts-gray-50: light-dark(var(--ts-light-gray-50), var(--ts-dark-gray-50));
+    --ts-gray-75: light-dark(var(--ts-light-gray-75), var(--ts-dark-gray-75));
+    --ts-gray-100: light-dark(var(--ts-light-gray-100), var(--ts-dark-gray-100));
+    --ts-gray-200: light-dark(var(--ts-light-gray-200), var(--ts-dark-gray-200));
+    --ts-gray-300: light-dark(var(--ts-light-gray-300), var(--ts-dark-gray-300));
+    --ts-gray-400: light-dark(var(--ts-light-gray-400), var(--ts-dark-gray-400));
+    --ts-gray-500: light-dark(var(--ts-light-gray-500), var(--ts-dark-gray-500));
+    --ts-gray-600: light-dark(var(--ts-light-gray-600), var(--ts-dark-gray-600));
+    --ts-gray-700: light-dark(var(--ts-light-gray-700), var(--ts-dark-gray-700));
+    --ts-gray-800: light-dark(var(--ts-light-gray-800), var(--ts-dark-gray-800));
+    --ts-gray-900: light-dark(var(--ts-light-gray-900), var(--ts-dark-gray-900));
+
+    --ts-link-700: light-dark(var(--ts-light-link-700), var(--ts-dark-link-700));
+
+    --ts-tonal-positive-400: light-dark(var(--ts-light-tonal-positive-400), var(--ts-dark-tonal-positive-400));
+    --ts-tonal-positive-800: light-dark(var(--ts-light-tonal-positive-800), var(--ts-dark-tonal-positive-800));
+
+    --ts-tonal-negative-400: light-dark(var(--ts-light-tonal-negative-400), var(--ts-dark-tonal-negative-400));
+    --ts-tonal-negative-800: light-dark(var(--ts-light-tonal-negative-800), var(--ts-dark-tonal-negative-800));
+
+    --ts-tonal-primary-400: light-dark(var(--ts-light-tonal-primary-400), var(--ts-dark-tonal-primary-400));
+    --ts-tonal-primary-800: light-dark(var(--ts-light-tonal-primary-800), var(--ts-dark-tonal-primary-800));
+
+    --ts-tonal-warning-400: light-dark(var(--ts-light-tonal-warning-400), var(--ts-dark-tonal-warning-400));
+    --ts-tonal-warning-800: light-dark(var(--ts-light-tonal-warning-800), var(--ts-dark-tonal-warning-800));
+
+    --ts-page-background-default: light-dark(var(--ts-light-page-background-default), var(--ts-dark-page-background-default));
+    --ts-page-background-secondary: light-dark(var(--ts-light-page-background-secondary), var(--ts-dark-page-background-secondary));
+    --ts-page-background-tertiary: light-dark(var(--ts-light-page-background-tertiary), var(--ts-dark-page-background-tertiary));
+
+    --ts-elevated-shadow: 0 2px 10px 0 light-dark(var(--ts-light-elevated-shadow), var(--ts-dark-elevated-shadow));
+    --ts-elevated-shadow-modal: 0 0 20px light-dark(var(--ts-light-elevated-shadow-modal), var(--ts-dark-elevated-shadow-modal));
+    --ts-elevated-shadow-drawer: 0 0 20px light-dark(var(--ts-light-elevated-shadow-drawer), var(--ts-dark-elevated-shadow-drawer));
+}
+
+/* ==========================================================================
+   Color Schemes
+   ========================================================================== */
+
+:root {
+    color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: light) {
+    .has-inverted {
+        color-scheme: dark;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .has-inverted {
+        color-scheme: light;
+    }
+}
+
+body.is-light,
+.has-light,
+body.is-dark .has-inverted {
+    color-scheme: light;
+}
+
+body.is-dark,
+.has-dark,
+body.is-light .has-inverted {
+    color-scheme: dark;
+}
+
+/**
+ * Hidden
+ */
+
+body.is-light .has-hidden-light,
+body.is-dark .has-hidden-dark {
+    display: none !important;
+}
+
+@media (prefers-color-scheme: light) {
+    body:not(.is-dark) .has-hidden-light {
+        display: none !important;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.is-light) .has-hidden-dark {
+        display: none !important;
+    }
+}
+
+/* ==========================================================================
+   Background Color
+   ========================================================================== */
+
+body.is-secondary {
+    background-color: var(--ts-page-background-secondary);
+}
+
+
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+html {
+    --ts-breakpoint-mobile-min: 0px;
+    --ts-breakpoint-mobile-max: 767.98px;
+    --ts-breakpoint-tablet-min: 768px;
+    --ts-breakpoint-tablet-max: 1023.98px;
+    --ts-breakpoint-desktop-min: 1024px;
+    --ts-breakpoint-desktop-max: 1279.98px;
+    --ts-breakpoint-widescreen-min: 1280px;
+    --ts-breakpoint-widescreen-max: 9999px;
+
     --ts-z-drawer: 102;
     --ts-z-dropdown: 103;
     --ts-z-mask: 101;
@@ -20040,14 +19832,6 @@ html {
     --ts-border-radius-container: 0.4rem;
     --ts-border-radius-element: 0.4rem;
     --ts-border-radius-secondary: 0.3rem;
-
-    --ts-page-background-default: var(--ts-gray-50);
-    --ts-page-background-secondary: var(--ts-gray-75);
-    --ts-page-background-tertiary: var(--ts-gray-100);
-
-    --ts-elevated-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-    --ts-elevated-shadow-modal: 0 0 20px rgba(0, 0, 0, 0.1);
-    --ts-elevated-shadow-drawer: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 /**
@@ -20056,11 +19840,8 @@ html {
 
 html {
     --ts-input-height-large: 42px;
-    --ts-input-height-large-dense: 37px;
     --ts-input-height-medium: 37px;
-    --ts-input-height-medium-dense: 32px;
     --ts-input-height-small: 32px;
-    --ts-input-height-small-dense: 32px;
 
     --ts-font-size-mini: calc(12 / 15 * 1rem);
     --ts-font-size-tiny: calc(13 / 15 * 1rem);
@@ -20108,6 +19889,7 @@ html {
     --ts-relative-massive: calc(30 / 15 * 1em);
 
     --ts-space-gap: 1rem;
+    --ts-space-gap-tiny: 0.3rem;
     --ts-space-gap-small: 0.5rem;
     --ts-space-gap-large: 1.5rem;
     --ts-space-gap-big: 3rem;
@@ -20115,214 +19897,16 @@ html {
 }
 
 /* ==========================================================================
-   Color Schemes
-   ========================================================================== */
-
-/**
- * Light
- */
-
-html,
-html.is-light,
-.has-light,
-html.is-dark .has-inverted {
-    color-scheme: light;
-
-    --ts-gray-50: var(--ts-light-gray-50);
-    --ts-gray-75: var(--ts-light-gray-75);
-    --ts-gray-100: var(--ts-light-gray-100);
-    --ts-gray-200: var(--ts-light-gray-200);
-    --ts-gray-300: var(--ts-light-gray-300);
-    --ts-gray-400: var(--ts-light-gray-400);
-    --ts-gray-500: var(--ts-light-gray-500);
-    --ts-gray-600: var(--ts-light-gray-600);
-    --ts-gray-700: var(--ts-light-gray-700);
-    --ts-gray-800: var(--ts-light-gray-800);
-    --ts-gray-900: var(--ts-light-gray-900);
-
-    --ts-tonal-positive-400: #cdffbe;
-    --ts-tonal-positive-800: #357016;
-
-    --ts-tonal-negative-400: #ffbebe;
-    --ts-tonal-negative-800: #701616;
-
-    --ts-tonal-primary-400: #d9edff;
-    --ts-tonal-primary-800: #005cde;
-
-    --ts-tonal-warning-400: #fff7ae;
-    --ts-tonal-warning-800: #866800;
-
-    --ts-page-background-default: var(--ts-gray-50);
-    --ts-page-background-secondary: var(--ts-gray-75);
-    --ts-page-background-tertiary: var(--ts-gray-100);
-
-    --ts-elevated-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-    --ts-elevated-shadow-modal: 0 0 20px rgba(0, 0, 0, 0.1);
-    --ts-elevated-shadow-drawer: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-html.is-light .has-inverted,
-.has-inverted,
-html.is-dark,
-.has-dark {
-    color-scheme: dark;
-
-    --ts-gray-50: var(--ts-dark-gray-50);
-    --ts-gray-75: var(--ts-dark-gray-75);
-    --ts-gray-100: var(--ts-dark-gray-100);
-    --ts-gray-200: var(--ts-dark-gray-200);
-    --ts-gray-300: var(--ts-dark-gray-300);
-    --ts-gray-400: var(--ts-dark-gray-400);
-    --ts-gray-500: var(--ts-dark-gray-500);
-    --ts-gray-600: var(--ts-dark-gray-600);
-    --ts-gray-700: var(--ts-dark-gray-700);
-    --ts-gray-800: var(--ts-dark-gray-800);
-    --ts-gray-900: var(--ts-dark-gray-900);
-
-    --ts-link-700: #a6a6f6;
-
-    --ts-tonal-positive-400: #92d34f;
-    --ts-tonal-positive-800: #0e4600;
-
-    --ts-tonal-negative-400: #d60000;
-    --ts-tonal-negative-800: #fff;
-
-    --ts-tonal-primary-400: #0a6ffd;
-    --ts-tonal-primary-800: #ffffff;
-
-    --ts-tonal-warning-400: #edff00;
-    --ts-tonal-warning-800: #463f00;
-
-    --ts-page-background-default: var(--ts-dark-gray-50);
-    --ts-page-background-secondary: rgb(30, 30, 30);
-    --ts-page-background-tertiary: rgb(23, 23, 23);
-
-    --ts-elevated-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
-    --ts-elevated-shadow-modal: 0 0 20px rgba(0, 0, 0, 0.5);
-    --ts-elevated-shadow-drawer: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-
-/**
- * Hidden
- */
-
-html.is-light .has-hidden-light,
-html.is-dark .has-hidden-dark {
-    display: none !important;
-}
-
-@media (prefers-color-scheme: light) {
-    html:not(.is-dark) .has-hidden-light {
-        display: none !important;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    html:not(.is-light) .has-hidden-dark {
-        display: none !important;
-    }
-}
-
-/**
- * Dark
- */
-
-@media (prefers-color-scheme: dark) {
-    html:not(.is-light) {
-        color-scheme: dark;
-
-        --ts-gray-50: var(--ts-dark-gray-50);
-        --ts-gray-75: var(--ts-dark-gray-75);
-        --ts-gray-100: var(--ts-dark-gray-100);
-        --ts-gray-200: var(--ts-dark-gray-200);
-        --ts-gray-300: var(--ts-dark-gray-300);
-        --ts-gray-400: var(--ts-dark-gray-400);
-        --ts-gray-500: var(--ts-dark-gray-500);
-        --ts-gray-600: var(--ts-dark-gray-600);
-        --ts-gray-700: var(--ts-dark-gray-700);
-        --ts-gray-800: var(--ts-dark-gray-800);
-        --ts-gray-900: var(--ts-dark-gray-900);
-
-        --ts-primary-400: #40a9ff;
-        --ts-primary-500: #2492f7;
-        --ts-primary-600: #2282e9;
-        --ts-primary-700: #0e52a5;
-        --ts-primary-800: #003a8c;
-        --ts-primary-900: #002766;
-
-        --ts-link-700: #afafff;
-
-        --ts-tonal-positive-400: #92d34f;
-        --ts-tonal-positive-800: #0e4600;
-
-        --ts-tonal-negative-400: #d60000;
-        --ts-tonal-negative-800: #fff;
-
-        --ts-tonal-primary-400: #0a6ffd;
-        --ts-tonal-primary-800: #ffffff;
-
-        --ts-tonal-warning-400: #edff00;
-        --ts-tonal-warning-800: #463f00;
-
-        --ts-page-background-default: var(--ts-dark-gray-50);
-        --ts-page-background-secondary: rgb(30, 30, 30);
-        --ts-page-background-tertiary: rgb(23, 23, 23);
-
-        --ts-elevated-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.25);
-        --ts-elevated-shadow-modal: 0 0 20px rgba(0, 0, 0, 0.5);
-        --ts-elevated-shadow-drawer: 0 0 20px rgba(0, 0, 0, 0.2);
-    }
-    html:not(.is-light) .has-inverted {
-        color-scheme: light;
-
-        --ts-gray-50: var(--ts-light-gray-50);
-        --ts-gray-75: var(--ts-light-gray-75);
-        --ts-gray-100: var(--ts-light-gray-100);
-        --ts-gray-200: var(--ts-light-gray-200);
-        --ts-gray-300: var(--ts-light-gray-300);
-        --ts-gray-400: var(--ts-light-gray-400);
-        --ts-gray-500: var(--ts-light-gray-500);
-        --ts-gray-600: var(--ts-light-gray-600);
-        --ts-gray-700: var(--ts-light-gray-700);
-        --ts-gray-800: var(--ts-light-gray-800);
-        --ts-gray-900: var(--ts-light-gray-900);
-
-        --ts-tonal-positive-400: #cdffbe;
-        --ts-tonal-positive-800: #357016;
-
-        --ts-tonal-negative-400: #ffbebe;
-        --ts-tonal-negative-800: #701616;
-
-        --ts-tonal-primary-400: #d9edff;
-        --ts-tonal-primary-800: #005cde;
-
-        --ts-tonal-warning-400: #fff7ae;
-        --ts-tonal-warning-800: #866800;
-
-        --ts-page-background-default: var(--ts-gray-50);
-        --ts-page-background-secondary: var(--ts-gray-75);
-        --ts-page-background-tertiary: var(--ts-gray-100);
-
-        --ts-elevated-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
-        --ts-elevated-shadow-modal: 0 0 20px rgba(0, 0, 0, 0.1);
-        --ts-elevated-shadow-drawer: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-}
-
-/* ==========================================================================
    Scales
    ========================================================================== */
 
-html.is-small,
-html.is-small body {
+body.is-small {
     font-size: 14px;
 }
-html.is-medium,
-html.is-medium body {
+body.is-medium {
     font-size: 15px;
 }
-html.is-large,
-html.is-large body {
+body.is-large {
     font-size: 16px;
 }
 
@@ -20330,23 +19914,14 @@ html.is-large body {
    Radius
    ========================================================================== */
 
-html.is-rounded {
+body.is-rounded {
     --ts-border-radius-container: 1rem;
     --ts-border-radius-element: 0.7rem;
     --ts-border-radius-secondary: 0.4rem;
 }
 
-html.is-sharp {
+body.is-sharp {
     --ts-border-radius-container: 0rem;
     --ts-border-radius-element: 0rem;
     --ts-border-radius-secondary: 0rem;
-}
-
-/* ==========================================================================
-   Background Color
-   ========================================================================== */
-
-html.is-secondary,
-html.is-secondary body {
-    background-color: var(--ts-page-background-secondary);
 }
