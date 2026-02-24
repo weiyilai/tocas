@@ -22,9 +22,6 @@
  */
 
 html {
-    background: var(--ts-page-background-default); /** 1. */
-    color: var(--ts-gray-800); /** 1. */
-
     width: 100%; /** 2. */
     height: 100%; /** 2. */
 
@@ -36,6 +33,9 @@ html {
 }
 
 body {
+    background: var(--ts-page-background-default); /** 1. */
+    color: var(--ts-gray-800); /** 1. */
+
     width: 100%;
     display: table-cell;
 }
@@ -54,10 +54,10 @@ body {
     -webkit-text-size-adjust: 100%; /** 3. */
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /** 4. */
 
-    font-family: "Noto Sans TC", "Noto Sans SC", "Noto Sans HK", "Noto Sans JP", "Noto Sans KR", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue",
-        "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體,
-        "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans",
-        sans-serif;
+    font-family:
+        "Noto Sans TC", "Noto Sans SC", "Noto Sans HK", "Noto Sans JP", "Noto Sans KR", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica",
+        "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體, "LiHei Pro",
+        "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
 }
 
 /** Lock scroll when dialog was opened */
