@@ -2,10 +2,6 @@
    Variables
    ========================================================================== */
 
-.ts-meta {
-    --dot-color: var(--ts-gray-500);
-}
-
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -27,7 +23,7 @@
 .ts-meta .item:not(:last-child)::after {
     margin: 0 0;
     content: "．";
-    color: var(--dot-color);
+    color: inherit;
     text-decoration: none;
     pointer-events: none;
     user-select: none;
